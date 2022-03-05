@@ -1,0 +1,11 @@
+from fastapi import APIRouter
+
+router = APIRouter(
+    prefix="/health",
+    tags=["ヘルスチェック"]
+)
+
+
+@router.get("/check", name="ヘルスチェック用のエンドポイント")
+def get():
+    return "OK"

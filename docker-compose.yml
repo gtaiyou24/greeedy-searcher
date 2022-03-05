@@ -1,0 +1,33 @@
+version: "3.4"
+
+services:
+  # App
+  app:
+    build: ./src
+    container_name: app
+    environment:
+      - DI_PROFILE_ACTIVES=
+      - ELASTICSEARCH_HOSTNAME=elasticsearch
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=changeme
+      - SYNONYMS_PATH=extra/synonyms.txt
+      - USER_DICTIONARY=extra/user_dictionary.txt
+    volumes:
+      - ./src:/app/
+    ports:
+      - "8000:8000"
+
+  # ElasticSearch
+  elasticsearch:
+    build: ./elasticsearch
+    container_name: elasticsearch
+    env_file:
+      - ./elasticsearch/.env
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-volume:/usr/share/elasticsearch/data
+
+volumes:
+  elasticsearch-volume:
+    driver: 'local'
