@@ -10,7 +10,7 @@ class Query:
     text: str
     operator: Operator
 
-    def __init__(self, text: str, operator: Operator = Operator.OR):
+    def __init__(self, text: str, operator: Operator = Operator.AND):
         super().__setattr__("text", text)
         super().__setattr__("operator", operator)
 

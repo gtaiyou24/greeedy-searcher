@@ -29,5 +29,7 @@ class CategoryTree:
         if self.current.id == category_id:
             return self.current
         for child in self.children:
-            return child.category_of(category_id)
+            optional_category = child.category_of(category_id)
+            if optional_category is not None:
+                return optional_category
         return None
