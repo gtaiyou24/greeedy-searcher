@@ -19,7 +19,7 @@ item_application_service = DIManager.get(ItemApplicationService)
 @router.get("/search", response_model=SearchHitItemsJson, name="アイテム検索機能",
             description="クエリ指定でインデックスに検索し、該当アイテムを返却します。")
 def search(gender: str, keyword: Optional[str] = None,
-           category: Optional[str] = None, colors: Optional[str] = None,
+           category_id: Optional[str] = None, colors: Optional[str] = None,
            designs: Optional[str] = None, details: Optional[str] = None,
            price_from: Optional[int] = None, price_to: Optional[int] = None,
            sort: str = "relevance", start: int = 1, size: int = 20) -> SearchHitItemsJson:
@@ -43,7 +43,7 @@ def search(gender: str, keyword: Optional[str] = None,
         details = set()
 
     search_hit_items_dpo = item_application_service.search(gender, keyword,
-                                                           category, colors,
+                                                           category_id, colors,
                                                            designs, details,
                                                            price_from, price_to,
                                                            sort, start, size)

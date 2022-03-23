@@ -4,6 +4,7 @@ from injector import singleton, inject
 
 from application.item.command import SaveItemCommand
 from application.item.dpo import SearchHitItemsDpo, GetItemDpo
+from domain.model.category import CategoryRepository, CategoryId
 from domain.model.gender import Gender
 from domain.model.index import ItemIndex, ItemIndexRow
 from domain.model.item import Item
@@ -15,8 +16,9 @@ from domain.model.url import URL
 @singleton
 class ItemApplicationService:
     @inject
-    def __init__(self, item_index: ItemIndex):
+    def __init__(self, item_index: ItemIndex, category_repository: CategoryRepository):
         self.__item_index = item_index
+        self.__category_repository = category_repository
         self.__item_id_factory = ItemIdFactory()
 
     def save(self, command: SaveItemCommand):
@@ -41,10 +43,15 @@ class ItemApplicationService:
         item_id = ItemId(item_id)
         self.__item_index.delete(item_id)
 
-    def search(self, gender: str, keyword: Optional[str], category: Optional[str],
+    def search(self, gender: str, keyword: Optional[str], a_category_id: Optional[str],
                colors: Set[str], designs: Set[str], details: Set[str],
                price_from: Optional[int], price_to: Optional[int],
                sort: str = "relevance", start: int = 1, size: int = 20) -> SearchHitItemsDpo:
+
+        category = None
+        if a_category_id:
+            category_id = CategoryId(a_category_id)
+            category = self.__category_repository.category_of(category_id)
 
         search_hit_items = self.__item_index.search(Gender[gender], keyword,
                                                     category, colors,

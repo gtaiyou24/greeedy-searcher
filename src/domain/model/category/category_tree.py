@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
-from domain.model.category import Category
+from domain.model.category import Category, CategoryId
 
 
 @dataclass(init=False, unsafe_hash=True, frozen=True)
@@ -16,3 +16,18 @@ class CategoryTree:
         assert isinstance(children, List), "childrenにはList[CategoryTree]を指定してください。(type={})".format(type(children))
         super().__setattr__("current", current)
         super().__setattr__("children", children)
+
+    def is_in(self, category_id: CategoryId) -> bool:
+        if self.current.id == category_id:
+            return True
+        for child in self.children:
+            if child.is_in(category_id):
+                return True
+        return False
+
+    def category_of(self, category_id: CategoryId) -> Optional[Category]:
+        if self.current.id == category_id:
+            return self.current
+        for child in self.children:
+            return child.category_of(category_id)
+        return None
