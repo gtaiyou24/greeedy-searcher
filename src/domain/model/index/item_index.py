@@ -1,7 +1,8 @@
 import abc
 from typing import NoReturn, Set, Optional
 
-from domain.model.item import Gender, Item
+from domain.model.gender import Gender
+from domain.model.item import Item
 from domain.model.item.id import ItemId
 from domain.model.index import SearchHitItems, ItemIndexRow
 

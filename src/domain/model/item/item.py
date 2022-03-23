@@ -3,7 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List
 
-from domain.model.item import ItemName, Gender, Price, BrandName
+from domain.model.gender import Gender
+from domain.model.item import ItemName, Price, BrandName
 from domain.model.item.id import ItemId
 from domain.model.url import URL
 

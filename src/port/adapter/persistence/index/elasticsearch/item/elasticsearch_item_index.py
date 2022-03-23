@@ -4,7 +4,8 @@ from typing import NoReturn, Optional, Set
 from elasticsearch import Elasticsearch
 from injector import inject
 
-from domain.model.item import Item, Gender
+from domain.model.gender import Gender
+from domain.model.item import Item
 from domain.model.item.id import ItemId
 from domain.model.index import ItemIndex, ItemIndexRow, SearchHitItems
 from port.adapter.persistence.index.elasticsearch.credential import CredentialGetter

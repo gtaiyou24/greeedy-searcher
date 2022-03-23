@@ -4,8 +4,9 @@ from injector import singleton, inject
 
 from application.item.command import SaveItemCommand
 from application.item.dpo import SearchHitItemsDpo, GetItemDpo
+from domain.model.gender import Gender
 from domain.model.index import ItemIndex, ItemIndexRow
-from domain.model.item import Item, Gender
+from domain.model.item import Item
 from domain.model.item.id import ItemId, ItemIdFactory
 from domain.model.meta import Meta
 from domain.model.url import URL

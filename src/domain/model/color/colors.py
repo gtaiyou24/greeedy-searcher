@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Set
 
-from domain.model.item.color import Color
+from domain.model.color import Color
 
 
 @dataclass(init=False, unsafe_hash=True, frozen=True)
