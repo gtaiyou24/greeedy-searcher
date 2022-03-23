@@ -72,6 +72,54 @@ WOMEN_チェスターコート = Category(CategoryId("women-outwear-10"), Gender
                           URL("https://www.dzimg.com/Dahong/202010/984471_18113399_k3.gif"), [],
                           QuerySet({Operator.OR: [Query("チェスターコート")]}))
 
+WOMEN_デニムパンツ = Category(CategoryId("women-pants-1"), Gender.WOMEN, CategoryName("デニムパンツ"),
+                        URL("https://cdn.grail.bz/images/goods/d/cu289/cu289_v1.jpg"), [],
+                        QuerySet({Operator.OR: [Query("デニムパンツ")]}))
+WOMEN_チノパン = Category(CategoryId("women-pants-2"), Gender.WOMEN, CategoryName("チノパン"),
+                        URL("https://cdn.grail.bz/images/goods/d/k8706w/k8706w_v1.jpg"), [],
+                        QuerySet({Operator.OR: [Query("チノパン")]}))
+WOMEN_スラックス = Category(CategoryId("women-pants-3"), Gender.WOMEN, CategoryName("スラックス"),
+                        URL("https://www.dzimg.com/Dahong/202110/1224795_19392681_k3.jpg"), [],
+                        QuerySet({Operator.OR: [Query("スラックス")]}))
+WOMEN_フレアパンツ = Category(CategoryId("women-pants-4"), Gender.WOMEN, CategoryName("フレアパンツ"),
+                        URL("https://cdn.grail.bz/images/goods/d/cu34/cu34_v1.jpg"), [],
+                        QuerySet({Operator.OR: [Query("フレアパンツ")]}))
+WOMEN_パンツ = Category(CategoryId("women-pants"), Gender.WOMEN, CategoryName("パンツ"),
+                     URL("https://img.ltwebstatic.com/images3_pi/2021/09/18/163194975494872b1dbf205e2b799463819854c5e0.webp"),
+                     [WOMEN_デニムパンツ.id, WOMEN_チノパン.id, WOMEN_スラックス.id, WOMEN_フレアパンツ.id],
+                     QuerySet({Operator.OR: [Query("パンツ")]}))
+
+WOMEN_フレアスカート = Category(CategoryId("women-skirt-1"), Gender.WOMEN, CategoryName("フレアスカート"),
+                         URL("https://www.dzimg.com/Dahong/202201/1295073_20026004_k3.jpg"), [],
+                         QuerySet({Operator.OR: [Query("フレアスカート")]}))
+WOMEN_マーメイドスカート = Category(CategoryId("women-skirt-2"), Gender.WOMEN, CategoryName("マーメイドスカート"),
+                           URL("https://cdn.grail.bz/images/goods/d/gc29/gc29_v1.jpg"), [],
+                           QuerySet({Operator.OR: [Query("マーメイドスカート")]}))
+WOMEN_タイトスカート = Category(CategoryId("women-skirt-3"), Gender.WOMEN, CategoryName("タイトスカート"),
+                           URL("https://www.dzimg.com/Dahong/202111/1253205_19557262_k3.jpg"), [],
+                           QuerySet({Operator.OR: [Query("タイトスカート")]}))
+WOMEN_ギャザースカート = Category(CategoryId("women-skirt-4"), Gender.WOMEN, CategoryName("ギャザースカート"),
+                           URL("https://gd.image-qoo10.jp/%e3%82%b9%e3%82%ab%e3%83%bc%e3%83%88-%e3%82%ae%e3%83%a3%e3%82%b6%e3%83%bc-%e3%83%ad%e3%83%b3%e3%82%b0-%e3%83%9e%e3%82%ad%e3%82%b7%e4%b8%88-%e5%85%a84%e8%89%b2-%e9%9f%93%e5%9b%bd-30%e4%bb%a3-40%e4%bb%a3-50%e4%bb%a3-%e6%af%8d%e3%81%ae%e6%97%a5-%e3%82%bb%e3%83%bc%e3%83%ab-%e3%82%aa%e3%83%bc%e3%83%97%e3%83%b3%e8%a8%98%e5%bf%b5-2019%e5%b9%b4-%e6%98%a5/li/570/726/1208726570.g_400-w_g.jpg"), [],
+                           QuerySet({Operator.OR: [Query("ギャザースカート")]}))
+WOMEN_スカート = Category(CategoryId("women-skirt"), Gender.WOMEN, CategoryName("スカート"),
+                      URL("https://img.ltwebstatic.com/images3_pi/2021/07/17/1626515436968136d71b8dfc7aaf86c1e6f7a58a35_thumbnail_600x.webp"),
+                      [WOMEN_フレアスカート.id, WOMEN_マーメイドスカート.id, WOMEN_タイトスカート.id, WOMEN_ギャザースカート.id],
+                      QuerySet({Operator.OR: [Query("スカート")]}))
+
+WOMEN_シャツワンピース = Category(CategoryId("women-onepiece-1"), Gender.WOMEN, CategoryName("シャツワンピース"),
+                          URL("https://www.dzimg.com/Dahong/202201/1309074_20046036_k3.jpg"), [],
+                          QuerySet({Operator.OR: [Query("シャツワンピース")]}))
+WOMEN_ジャンパースカート = Category(CategoryId("women-onepiece-2"), Gender.WOMEN, CategoryName("ジャンパースカート"),
+                           URL("https://cdn.grail.bz/images/goods/d/rut747/rut747_v1.jpg"), [],
+                           QuerySet({Operator.OR: [Query("ジャンパースカート"), Query("キャミソールワンピース")]}))
+WOMEN_ニットワンピース = Category(CategoryId("women-onepiece-3"), Gender.WOMEN, CategoryName("ニットワンピース"),
+                           URL("https://cdn.grail.bz/images/goods/d/rut785/rut785_v1.jpg"), [],
+                           QuerySet({Operator.OR: [Query("ニットワンピース")]}))
+WOMEN_ワンピース = Category(CategoryId("women-onepiece"), Gender.WOMEN, CategoryName("ワンピース"),
+                       URL("https://www.dzimg.com/Dahong/202109/1210043_19276844_k3.jpg"),
+                       [WOMEN_シャツワンピース.id, WOMEN_ジャンパースカート.id, WOMEN_ニットワンピース.id],
+                       QuerySet({Operator.OR: [Query("ワンピース")]}))
+
 
 class InMemCategoryRepository(CategoryRepository):
     __women_category_tree: List[CategoryTree] = [
@@ -94,6 +142,23 @@ class InMemCategoryRepository(CategoryRepository):
             CategoryTree(WOMEN_MA1, []),
             CategoryTree(WOMEN_トレンチコート, []),
             CategoryTree(WOMEN_チェスターコート, [])
+        ]),
+        CategoryTree(WOMEN_パンツ, [
+            CategoryTree(WOMEN_デニムパンツ, []),
+            CategoryTree(WOMEN_チノパン, []),
+            CategoryTree(WOMEN_スラックス, []),
+            CategoryTree(WOMEN_フレアパンツ, [])
+        ]),
+        CategoryTree(WOMEN_スカート, [
+            CategoryTree(WOMEN_フレアスカート, []),
+            CategoryTree(WOMEN_マーメイドスカート, []),
+            CategoryTree(WOMEN_タイトスカート, []),
+            CategoryTree(WOMEN_ギャザースカート, [])
+        ]),
+        CategoryTree(WOMEN_ワンピース, [
+            CategoryTree(WOMEN_シャツワンピース, []),
+            CategoryTree(WOMEN_ジャンパースカート, []),
+            CategoryTree(WOMEN_ニットワンピース, [])
         ])
     ]
 
