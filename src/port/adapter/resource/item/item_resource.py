@@ -6,7 +6,7 @@ from application.item.command import SaveItemCommand
 from application.item.service import ItemApplicationService
 from di import DIManager
 from port.adapter.resource.item.request import RequestSaveItem
-from port.adapter.resource.item.response import SearchHitItemsJson, GetItemJson
+from port.adapter.resource.item.response import SearchHitItemsJson, GetItemJson, GetItemListJson
 
 router = APIRouter(
     prefix="/items",
@@ -19,7 +19,7 @@ item_application_service = DIManager.get(ItemApplicationService)
 @router.get("/search", response_model=SearchHitItemsJson, name="アイテム検索機能",
             description="クエリ指定でインデックスに検索し、該当アイテムを返却します。")
 def search(gender: str, keyword: Optional[str] = None,
-           category: Optional[str] = None, colors: Optional[str] = None,
+           category_id: Optional[str] = None, colors: Optional[str] = None,
            designs: Optional[str] = None, details: Optional[str] = None,
            price_from: Optional[int] = None, price_to: Optional[int] = None,
            sort: str = "relevance", start: int = 1, size: int = 20) -> SearchHitItemsJson:
@@ -43,7 +43,7 @@ def search(gender: str, keyword: Optional[str] = None,
         details = set()
 
     search_hit_items_dpo = item_application_service.search(gender, keyword,
-                                                           category, colors,
+                                                           category_id, colors,
                                                            designs, details,
                                                            price_from, price_to,
                                                            sort, start, size)
@@ -73,6 +73,12 @@ def save(request: RequestSaveItem):
 def get(item_id: str) -> GetItemJson:
     dpo = item_application_service.get(item_id)
     return GetItemJson.make_by(dpo)
+
+
+@router.get("", response_model=GetItemListJson, name="アイテム一覧取得機能")
+def list(ids: str) -> GetItemListJson:
+    dpo = item_application_service.list(ids.split(","))
+    return GetItemListJson.make_by(dpo)
 
 
 @router.delete("/{item_id}", name="アイテム削除機能")

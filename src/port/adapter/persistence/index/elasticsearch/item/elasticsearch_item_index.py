@@ -4,10 +4,14 @@ from typing import NoReturn, Optional, Set
 from elasticsearch import Elasticsearch
 from injector import inject
 
-from domain.model.item import Item, Gender
+from domain.model.category import Category
+from domain.model.gender import Gender
+from domain.model.item import Item
 from domain.model.item.id import ItemId
 from domain.model.index import ItemIndex, ItemIndexRow, SearchHitItems
+from domain.model.query import QuerySetInterest
 from port.adapter.persistence.index.elasticsearch.credential import CredentialGetter
+from port.adapter.persistence.index.elasticsearch.interest import QuerySetJsonMapper
 
 
 class ElasticsearchItemIndex(ItemIndex):
@@ -182,6 +186,7 @@ class ElasticsearchItemIndex(ItemIndex):
     @inject
     def __init__(self, credential_getter: CredentialGetter):
         self.__credential_getter = credential_getter
+        self.__category_json_mapper: QuerySetInterest = QuerySetJsonMapper(fields=['name^3', 'keywords'])
         self.__search_engine = Elasticsearch(
             self.__credential_getter.get_host(),
             http_auth=(
@@ -218,7 +223,7 @@ class ElasticsearchItemIndex(ItemIndex):
         self.__search_engine.delete(index=self.INDEX_NAME, id=item_id.id)
 
     def search(self, gender: Gender, keyword: Optional[str],
-               category: Optional[str], colors: Optional[Set[str]],
+               category: Optional[Category], colors: Optional[Set[str]],
                designs: Optional[Set[str]], details: Optional[Set[str]],
                price_from: Optional[int], price_to: Optional[int],
                sort: str, start: int, size: int) -> SearchHitItems:
@@ -236,13 +241,7 @@ class ElasticsearchItemIndex(ItemIndex):
 
         # カテゴリ
         if category:
-            must.append({
-                'multi_match': {
-                    'query': category,
-                    'operator': 'and',
-                    'fields': ['name^3', 'keywords']
-                }
-            })
+            must.append(self.__category_json_mapper.to_payload_from(category.query_set))
 
         # 柄・デザイン
         if designs:
