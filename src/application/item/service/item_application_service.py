@@ -1,9 +1,9 @@
-from typing import Optional, Set
+from typing import Optional, Set, List
 
 from injector import singleton, inject
 
 from application.item.command import SaveItemCommand
-from application.item.dpo import SearchHitItemsDpo, GetItemDpo
+from application.item.dpo import SearchHitItemsDpo, GetItemDpo, GetItemListDpo
 from domain.model.category import CategoryRepository, CategoryId
 from domain.model.gender import Gender
 from domain.model.index import ItemIndex, ItemIndexRow
@@ -38,6 +38,10 @@ class ItemApplicationService:
         item_id = ItemId(item_id)
         item = self.__item_index.get(item_id)
         return GetItemDpo(item)
+
+    def list(self, an_item_ids: List[str]) -> GetItemListDpo:
+        items: List[Item] = [self.__item_index.get(ItemId(_id)) for _id in an_item_ids]
+        return GetItemListDpo(items)
 
     def delete(self, item_id: str):
         item_id = ItemId(item_id)

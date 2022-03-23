@@ -6,7 +6,7 @@ from application.item.command import SaveItemCommand
 from application.item.service import ItemApplicationService
 from di import DIManager
 from port.adapter.resource.item.request import RequestSaveItem
-from port.adapter.resource.item.response import SearchHitItemsJson, GetItemJson
+from port.adapter.resource.item.response import SearchHitItemsJson, GetItemJson, GetItemListJson
 
 router = APIRouter(
     prefix="/items",
@@ -73,6 +73,12 @@ def save(request: RequestSaveItem):
 def get(item_id: str) -> GetItemJson:
     dpo = item_application_service.get(item_id)
     return GetItemJson.make_by(dpo)
+
+
+@router.get("", response_model=GetItemListJson, name="アイテム一覧取得機能")
+def list(ids: str) -> GetItemListJson:
+    dpo = item_application_service.list(ids.split(","))
+    return GetItemListJson.make_by(dpo)
 
 
 @router.delete("/{item_id}", name="アイテム削除機能")
