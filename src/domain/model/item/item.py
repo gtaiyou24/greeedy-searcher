@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import List
 
 from domain.model.gender import Gender
-from domain.model.item import ItemName, Price, BrandName
+from domain.model.item import ItemName, Price, BrandName, Description
 from domain.model.item.id import ItemId
 from domain.model.url import URL
 
@@ -15,17 +15,20 @@ class Item:
     item_name: ItemName
     brand_name: BrandName
     price: Price
+    description: Description
     gender: Gender
     images: List[URL]
     page_url: URL
 
     # NOTE: 今後は、系統/サイズ/在庫/レビューを追加する
 
-    def __init__(self, id: str, name: str, brand_name: str, price: int, gender: str, images: List[str], page_url: str):
+    def __init__(self, id: str, name: str, brand_name: str, price: int, description: str,
+                 gender: str, images: List[str], page_url: str):
         super().__setattr__("item_id", ItemId(id))
         super().__setattr__("item_name", ItemName(name))
         super().__setattr__("brand_name", BrandName(brand_name))
         super().__setattr__("price", Price(price))
+        super().__setattr__("description", Description(description))
         super().__setattr__("gender", Gender[gender])
         super().__setattr__("images", [URL(image) for image in images])
         super().__setattr__("page_url", URL(page_url))

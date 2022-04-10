@@ -208,7 +208,7 @@ class ElasticsearchItemIndex(ItemIndex):
             'page_url': item_index_row.item.page_url.link,
             'keywords': item_index_row.meta.keywords.text,
             'description': item_index_row.meta.description.text,
-            'content': item_index_row.meta.content.text,
+            'content': item_index_row.item.description.text,
         }
         self.__search_engine.index(index=self.INDEX_NAME, id=item_index_row.item.item_id.id, body=document)
 
@@ -216,7 +216,7 @@ class ElasticsearchItemIndex(ItemIndex):
         doc = self.__search_engine.get(index=self.INDEX_NAME, id=item_id.id)
         _id = str(doc['_id'])
         source = doc['_source']
-        return Item(_id, str(source['name']), str(source['brand_name']), int(source['price']),
+        return Item(_id, str(source['name']), str(source['brand_name']), int(source['price']), str(source['content']),
                     str(source['gender']), list(source['images']), str(source['page_url']))
 
     def delete(self, item_id: ItemId) -> NoReturn:
@@ -308,7 +308,7 @@ class ElasticsearchItemIndex(ItemIndex):
             _id = str(doc['_id'])
             source = doc['_source']
 
-            item = Item(_id, str(source['name']), str(source['brand_name']), int(source['price']),
+            item = Item(_id, str(source['name']), str(source['brand_name']), int(source['price']), str(source['content']),
                         str(source['gender']), list(source['images']), str(source['page_url']))
 
             item_list.append(item)

@@ -8,12 +8,12 @@ class SaveItemCommand:
     class Meta:
         keywords: str
         description: str
-        content: str
 
     item_id: str
     item_name: str
     brand_name: str
     price: int
+    description: str
     gender: str
     images: List[str]
     page_url: str

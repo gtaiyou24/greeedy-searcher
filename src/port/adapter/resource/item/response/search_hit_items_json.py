@@ -25,6 +25,7 @@ class SearchHitItemsJson(BaseModel):
         name: str = Field(description="アイテム名")
         brand_name: str = Field(description="ブランド名")
         price: int = Field(description="価格")
+        description: str = Field(title="アイテム説明")
         gender: str = Field(description="性別")
         images: List[str] = Field(description="画像URL一覧")
         page_url: str = Field(description="アイテムのページURL")
@@ -42,8 +43,8 @@ class SearchHitItemsJson(BaseModel):
             ranking = start + i
             hit = SearchHitItemsJson.Hit(ranking=ranking, id=item.item_id.id, name=item.item_name.text,
                                          brand_name=item.brand_name.name, price=item.price.yen,
-                                         gender=item.gender.name, images=[url.link for url in item.images],
-                                         page_url=item.page_url.link)
+                                         description=item.description.text, gender=item.gender.name,
+                                         images=[url.link for url in item.images], page_url=item.page_url.link)
             hits.append(hit)
 
         first_results_position = start

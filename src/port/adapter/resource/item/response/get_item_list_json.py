@@ -13,6 +13,7 @@ class GetItemListJson(BaseModel):
         name: str = Field(title="アイテム名")
         brand_name: str = Field(title="ブランド名")
         price: int = Field(title="価格")
+        description: str = Field(title="アイテム説明")
         gender: str = Field(title="性別")
         images: List[str] = Field(default=[], title="画像URL一覧")
         page_url: str = Field(title="アイテムのページURL")
@@ -26,6 +27,7 @@ class GetItemListJson(BaseModel):
                                         name=item.item_name.text,
                                         brand_name=item.brand_name.name,
                                         price=item.price.yen,
+                                        description=item.description.text,
                                         gender=item.gender.name,
                                         images=[image.link for image in item.images],
                                         page_url=item.page_url.link) for item in dpo.items])

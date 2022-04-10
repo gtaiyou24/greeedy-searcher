@@ -57,13 +57,13 @@ def save(request: RequestSaveItem):
         item_name=request.item_name,
         brand_name=request.brand_name,
         price=request.price,
+        description=request.meta.content,
         gender=request.gender,
         images=request.images,
         page_url=request.page_url,
         meta=SaveItemCommand.Meta(
             keywords=request.meta.keywords,
-            description=request.meta.description,
-            content=request.meta.content
+            description=request.meta.description
         )
     )
     item_application_service.save(command)

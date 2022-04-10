@@ -28,9 +28,9 @@ class ItemApplicationService:
         else:
             _id = command.item_id
 
-        item = Item(_id, command.item_name, command.brand_name, command.price,
+        item = Item(_id, command.item_name, command.brand_name, command.price, command.description,
                     command.gender, command.images, command.page_url)
-        meta = Meta(command.meta.keywords, command.meta.description, command.meta.content)
+        meta = Meta(command.meta.keywords, command.meta.description)
         item_index_row = ItemIndexRow(item, meta)
         self.__item_index.add(item_index_row)
 
